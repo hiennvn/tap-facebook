@@ -77,12 +77,7 @@ class InsightsJobTimeout(TapFacebookException):
     pass
 
 def transform_datetime_string(dts):
-    parsed_dt = dateutil.parser.parse(dts)
-    if parsed_dt.tzinfo is None:
-        parsed_dt = parsed_dt.replace(tzinfo=timezone.utc)
-    else:
-        parsed_dt = parsed_dt.astimezone(timezone.utc)
-    return singer.strftime(parsed_dt)
+    return str(dateutil.parser.parse(dts, ignoretz=True))
 
 def iter_delivery_info_filter(stream_type):
     filt = {
@@ -551,7 +546,7 @@ def get_streams_to_sync(account, catalog, state):
     return streams
 
 def transform_date_hook(data, typ, schema):
-    if typ == 'string' and schema.get('format') == 'date-time' and isinstance(data, str):
+    if typ == 'string' and schema.get('format') == 'datetime' and isinstance(data, str):
         transformed = transform_datetime_string(data)
         return transformed
     return data
