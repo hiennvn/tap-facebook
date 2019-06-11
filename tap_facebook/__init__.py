@@ -77,12 +77,12 @@ class InsightsJobTimeout(TapFacebookException):
     pass
 
 def transform_datetime_string(dts):
-    parsed_dt = dateutil.parser.parse(dts)
-    if parsed_dt.tzinfo is None:
-        parsed_dt = parsed_dt.replace(tzinfo=timezone.utc)
-    else:
-        parsed_dt = parsed_dt.astimezone(timezone.utc)
-    return singer.strftime(parsed_dt)
+    # parsed_dt = dateutil.parser.parse(dts)
+    # if parsed_dt.tzinfo is None:
+    #     parsed_dt = parsed_dt.replace(tzinfo=timezone.utc)
+    # else:
+    #     parsed_dt = parsed_dt.astimezone(timezone.utc)
+    return str(dts)
 
 def iter_delivery_info_filter(stream_type):
     filt = {

@@ -133,7 +133,8 @@
       "type": [
         "null",
         "string"
-      ]
+      ],
+      "format": "date-time"
     },
     "created_time": {
       "type": [
