@@ -15,7 +15,7 @@
         "null",
         "string"
       ],
-      "format": "date-time"
+      "format": "datetime"
     },
     "promoted_object": {
       "type": [
@@ -90,7 +90,7 @@
         "null",
         "string"
       ],
-      "format": "date-time"
+      "format": "datetime"
     },
     "daily_budget": {
       "type": [
@@ -131,14 +131,14 @@
         "null",
         "string"
       ],
-      "format": "date-time"
+      "format": "datetime"
     },
     "start_time": {
       "type": [
         "null",
         "string"
       ],
-      "format": "date-time"
+      "format": "datetime"
     },
     "lifetime_budget": {
       "type": [
@@ -191,8 +191,8 @@
         "properties": {
           "id": {"type": "string"},
           "name": {"type": "string"},
-          "created_time": {"type": "string", "format": "date-time"},
-          "updated_time": {"type": "string", "format": "date-time"}
+          "created_time": {"type": "string", "format": "datetime"},
+          "updated_time": {"type": "string", "format": "datetime"}
         }
       }
     }

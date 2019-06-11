@@ -41,14 +41,14 @@
           },
           "created_time": {
             "type": "string",
-            "format": "date-time"
+            "format": "datetime"
           },
           "name": {
             "type": "string"
           },
           "updated_time": {
             "type": "string",
-            "format": "date-time"
+            "format": "datetime"
           }
         }
       }
@@ -134,14 +134,14 @@
         "null",
         "string"
       ],
-      "format": "date-time"
+      "format": "datetime"
     },
     "created_time": {
       "type": [
         "null",
         "string"
       ],
-      "format": "date-time"
+      "format": "datetime"
     },
     "name": {
       "type": [

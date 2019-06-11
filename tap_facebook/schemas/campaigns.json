@@ -44,11 +44,11 @@
     },
     "start_time": {
       "type": "string",
-      "format": "date-time"
+      "format": "datetime"
     },
     "updated_time": {
       "type": "string",
-      "format": "date-time"
+      "format": "datetime"
     },
     "ads": {
       "properties": {
@@ -85,8 +85,8 @@
         "properties": {
           "id": {"type": "string"},
           "name": {"type": "string"},
-          "created_time": {"type": "string", "format": "date-time"},
-          "updated_time": {"type": "string", "format": "date-time"}
+          "created_time": {"type": "string", "format": "datetime"},
+          "updated_time": {"type": "string", "format": "datetime"}
         }
       }
     }

@@ -44,7 +44,7 @@
         "null",
         "string"
       ],
-      "format": "date-time"
+      "format": "datetime"
     },
     "ad_id": {
       "type": [
@@ -323,7 +323,7 @@
         "null",
         "string"
       ],
-      "format": "date-time"
+      "format": "datetime"
     },
     "objective": {
       "type": [
