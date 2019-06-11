@@ -9,6 +9,7 @@ import datetime
 from datetime import timezone
 import dateutil
 
+import pytz
 import attr
 import pendulum
 import requests
@@ -77,7 +78,10 @@ class InsightsJobTimeout(TapFacebookException):
     pass
 
 def transform_datetime_string(dts):
-    return str(dateutil.parser.parse(dts, ignoretz=True))
+    #Convert datetime into string format that BigQuery will accept
+    parsed = dateutil.parser.parse(dts)
+    utc = parsed.astimezone(pytz.utc).replace(tzinfo=None)
+    return str(utc)
 
 def iter_delivery_info_filter(stream_type):
     filt = {
