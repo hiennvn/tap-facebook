@@ -189,6 +189,7 @@ class IncrementalStream(Stream):
                     max_bookmark = updated_at
 
                 record = record_preparation(record)
+                time.sleep(3)
                 yield {'record': record}
 
             if max_bookmark:
