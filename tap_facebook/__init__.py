@@ -450,7 +450,7 @@ class AdsInsights(Stream):
             is_async=True)
         status = None
         time_start = time.time()
-        sleep_time = 60
+        sleep_time = 30
         while status != "Job Completed":
             duration = time.time() - time_start
             job = job.remote_read()
