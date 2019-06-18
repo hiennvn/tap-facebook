@@ -226,9 +226,8 @@ class Ads(IncrementalStream):
         def do_request():
             params = {'limit': RESULT_RETURN_LIMIT}
             if self.current_bookmark:
-                following_day = self.current_bookmark + timedelta(days=30)
-                params.update({'filtering': [{'field': 'ad.' + UPDATED_TIME_KEY, 'operator': 'LESS_THAN', 'value': following_day.int_timestamp},
-                    {'field': 'ad' + UPDATED_TIME_KEY, 'operator': 'GREATER_THAN', 'value': self.current_bookmark.int_timestamp}]})
+                following_month = self.current_bookmark + timedelta(days=30)
+                params.update({'filtering': [{'field': 'ad.' + UPDATED_TIME_KEY, 'operator': 'IN_RANGE', 'value': ([self.current_bookmark.int_timestamp, following_month.int_timestamp])}]})
             yield self.account.get_ads(fields=self.automatic_fields(), params=params) # pylint: disable=no-member
 
         @retry_pattern(backoff.expo, FacebookRequestError, max_tries=5, factor=5)
