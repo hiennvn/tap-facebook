@@ -183,9 +183,9 @@ class IncrementalStream(Stream):
             for record in recordset:
                 updated_at = pendulum.parse(record[UPDATED_TIME_KEY])
 
-                if self.current_bookmark and self.current_bookmark <= updated_at:
+                if self.current_bookmark and self.current_bookmark >= updated_at:
                     continue
-                if not max_bookmark or updated_at < max_bookmark:
+                if not max_bookmark or updated_at > max_bookmark:
                     max_bookmark = updated_at
 
                 record = record_preparation(record)
