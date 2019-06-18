@@ -183,9 +183,9 @@ class IncrementalStream(Stream):
             for record in recordset:
                 updated_at = pendulum.parse(record[UPDATED_TIME_KEY])
 
-                if self.current_bookmark and self.current_bookmark >= updated_at:
+                if self.current_bookmark and self.current_bookmark <= updated_at:
                     continue
-                if not max_bookmark or updated_at > max_bookmark:
+                if not max_bookmark or updated_at < max_bookmark:
                     max_bookmark = updated_at
 
                 record = record_preparation(record)
@@ -226,7 +226,7 @@ class Ads(IncrementalStream):
         def do_request():
             params = {'limit': RESULT_RETURN_LIMIT}
             if self.current_bookmark:
-                params.update({'filtering': [{'field': 'ad.' + UPDATED_TIME_KEY, 'operator': 'GREATER_THAN', 'value': self.current_bookmark.int_timestamp}]})
+                params.update({'filtering': [{'field': 'ad.' + UPDATED_TIME_KEY, 'operator': 'LESS_THAN', 'value': self.current_bookmark.int_timestamp}]})
             yield self.account.get_ads(fields=self.automatic_fields(), params=params) # pylint: disable=no-member
 
         @retry_pattern(backoff.expo, FacebookRequestError, max_tries=5, factor=5)
@@ -234,7 +234,7 @@ class Ads(IncrementalStream):
             params = {'limit': RESULT_RETURN_LIMIT}
             bookmark_params = []
             if self.current_bookmark:
-                bookmark_params.append({'field': 'ad.' + UPDATED_TIME_KEY, 'operator': 'GREATER_THAN', 'value': self.current_bookmark.int_timestamp})
+                bookmark_params.append({'field': 'ad.' + UPDATED_TIME_KEY, 'operator': 'LESS_THAN', 'value': self.current_bookmark.int_timestamp})
             for del_info_filt in iter_delivery_info_filter('ad'):
                 params.update({'filtering': [del_info_filt] + bookmark_params})
                 filt_ads = self.account.get_ads(fields=self.automatic_fields(), params=params) # pylint: disable=no-member
@@ -265,7 +265,7 @@ class AdSets(IncrementalStream):
         def do_request():
             params = {'limit': RESULT_RETURN_LIMIT}
             if self.current_bookmark:
-                params.update({'filtering': [{'field': 'adset.' + UPDATED_TIME_KEY, 'operator': 'GREATER_THAN', 'value': self.current_bookmark.int_timestamp}]})
+                params.update({'filtering': [{'field': 'adset.' + UPDATED_TIME_KEY, 'operator': 'LESS_THAN', 'value': self.current_bookmark.int_timestamp}]})
             yield self.account.get_ad_sets(fields=self.automatic_fields(), params=params) # pylint: disable=no-member
 
         @retry_pattern(backoff.expo, FacebookRequestError, max_tries=5, factor=5)
@@ -273,7 +273,7 @@ class AdSets(IncrementalStream):
             params = {'limit': RESULT_RETURN_LIMIT}
             bookmark_params = []
             if self.current_bookmark:
-                bookmark_params.append({'field': 'adset.' + UPDATED_TIME_KEY, 'operator': 'GREATER_THAN', 'value': self.current_bookmark.int_timestamp})
+                bookmark_params.append({'field': 'adset.' + UPDATED_TIME_KEY, 'operator': 'LESS_THAN', 'value': self.current_bookmark.int_timestamp})
             for del_info_filt in iter_delivery_info_filter('adset'):
                 params.update({'filtering': [del_info_filt] + bookmark_params})
                 filt_adsets = self.account.get_ad_sets(fields=self.automatic_fields(), params=params) # pylint: disable=no-member
@@ -305,7 +305,7 @@ class Campaigns(IncrementalStream):
         def do_request():
             params = {'limit': RESULT_RETURN_LIMIT}
             if self.current_bookmark:
-                params.update({'filtering': [{'field': 'campaign.' + UPDATED_TIME_KEY, 'operator': 'GREATER_THAN', 'value': self.current_bookmark.int_timestamp}]})
+                params.update({'filtering': [{'field': 'campaign.' + UPDATED_TIME_KEY, 'operator': 'LESS_THAN', 'value': self.current_bookmark.int_timestamp}]})
             yield self.account.get_campaigns(fields=self.automatic_fields(), params=params) # pylint: disable=no-member
 
         @retry_pattern(backoff.expo, FacebookRequestError, max_tries=5, factor=5)
@@ -313,7 +313,7 @@ class Campaigns(IncrementalStream):
             params = {'limit': RESULT_RETURN_LIMIT}
             bookmark_params = []
             if self.current_bookmark:
-                bookmark_params.append({'field': 'campaign.' + UPDATED_TIME_KEY, 'operator': 'GREATER_THAN', 'value': self.current_bookmark.int_timestamp})
+                bookmark_params.append({'field': 'campaign.' + UPDATED_TIME_KEY, 'operator': 'LESS_THAN', 'value': self.current_bookmark.int_timestamp})
             for del_info_filt in iter_delivery_info_filter('campaign'):
                 params.update({'filtering': [del_info_filt] + bookmark_params})
                 filt_campaigns = self.account.get_campaigns(fields=self.automatic_fields(), params=params) # pylint: disable=no-member
