@@ -295,7 +295,7 @@ class AdSets(IncrementalStream):
 class Campaigns(IncrementalStream):
 
     field_class = fb_campaign.Campaign.Field
-    key_properties = ['id']
+    key_properties = ['id', 'updated_time']
 
     def __iter__(self):
         props = self.fields()
@@ -307,8 +307,8 @@ class Campaigns(IncrementalStream):
             params = {'limit': RESULT_RETURN_LIMIT}
             if self.current_bookmark:
                 following_month = self.current_bookmark + timedelta(days=7)
-                print self.current_bookmark
-                print following_month
+                print(self.current_bookmark)
+                print(following_month)
                 params.update({'filtering': [{'field': 'ad.' + UPDATED_TIME_KEY, 'operator': 'IN_RANGE', 'value': ([self.current_bookmark.int_timestamp, following_month.int_timestamp])}]})
             yield self.account.get_campaigns(fields=self.automatic_fields(), params=params) # pylint: disable=no-member
 
