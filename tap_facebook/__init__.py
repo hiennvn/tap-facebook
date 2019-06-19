@@ -306,7 +306,9 @@ class Campaigns(IncrementalStream):
         def do_request():
             params = {'limit': RESULT_RETURN_LIMIT}
             if self.current_bookmark:
-                following_month = self.current_bookmark + timedelta(days=30)
+                following_month = self.current_bookmark + timedelta(days=7)
+                print self.current_bookmark
+                print following_month
                 params.update({'filtering': [{'field': 'ad.' + UPDATED_TIME_KEY, 'operator': 'IN_RANGE', 'value': ([self.current_bookmark.int_timestamp, following_month.int_timestamp])}]})
             yield self.account.get_campaigns(fields=self.automatic_fields(), params=params) # pylint: disable=no-member
 
