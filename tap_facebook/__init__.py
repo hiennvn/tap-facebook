@@ -423,12 +423,15 @@ class AdsInsights(Stream):
 
         buffered_start_date = start_date.subtract(days=buffer_days)
 
-        end_date = pendulum.now()
+        end_date = datetime.datetime.now(pytz.timezone("America/Los_Angeles")) \
+            .replace(hour = 0, minute = 0, second = 0, microsecond = 0)\
+            .astimezone(pytz.utc)
+
         if CONFIG.get('end_date'):
             end_date = pendulum.parse(CONFIG.get('end_date'))
 
         # Some automatic fields (primary-keys) cannot be used as 'fields' query params.
-        while buffered_start_date <= end_date:
+        while buffered_start_date < end_date:
             yield {
                 'level': self.level,
                 'action_breakdowns': list(self.action_breakdowns),
