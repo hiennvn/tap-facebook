@@ -423,9 +423,8 @@ class AdsInsights(Stream):
 
         buffered_start_date = start_date.subtract(days=buffer_days)
 
-        end_date = datetime.datetime.now(pytz.timezone("America/Los_Angeles")) \
-            .replace(hour = 0, minute = 0, second = 0, microsecond = 0)\
-            .astimezone(pytz.utc)
+        end_date = datetime.datetime.now(pytz.timezone("UTC")) \
+            .replace(hour = 0, minute = 0, second = 0, microsecond = 0)
 
         if CONFIG.get('end_date'):
             end_date = pendulum.parse(CONFIG.get('end_date'))
